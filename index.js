@@ -10,13 +10,16 @@ if (!PARTITION) {
   process.exit(0);
 }
 const readyFolder = path.join(__dirname, 'partition', PARTITION);
-const runFolder = path.join(__dirname, 'contracts');
-const resultFolder = path.join(__dirname, 'results');
+const runFolder = path.join(__dirname, 'running', PARTITION, 'contracts');
+const resultFolder = path.join(__dirname, 'running', PARTITION, 'results');
 const pwd = shell.pwd().toString();
 
 const failFile = path.join(resultFolder, 'fail.txt');
 const successFile = path.join(resultFolder, 'success.txt'); 
 const finalStatFile = path.join(resultFolder, 'final.json');
+if (!fs.existsSync(resultFolder)) {
+  fs.mkdirSync(resultFolder);
+}
 [failFile, successFile, finalStatFile].forEach(f => {
   if (!fs.existsSync(f)) {
     fs.openSync(f, 'w');
@@ -39,7 +42,7 @@ readyFiles.forEach(filePath => {
   fs.mkdirSync(runFolder);
   fs.copyFileSync(readyFile, runFile);
   shell.cd(pwd);
-  shell.exec(`./fuzzer --file contracts/${filePath} --name ${filename} --assets assets/ --duration 120 --mode 0 --reporter 1 --attacker ReentrancyAttacker`);
+  shell.exec(`./fuzzer --file running/${PARTITION}/contracts/${filePath} --name ${filename} --assets assets/ --duration 120 --mode 0 --reporter 1 --attacker ReentrancyAttacker`);
   if (fs.existsSync(statFile)) {
     // Read result
     let curStat = JSON.parse(fs.readFileSync(statFile, 'utf8'));
