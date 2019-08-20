@@ -11,24 +11,24 @@ readyFiles.sort((a, b) => {
   const textB = b.toUpperCase();
   return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
 })
-rimraf.sync(path.join(__dirname, 'partition'));
+// rimraf.sync(path.join(__dirname, 'partition'));
 rimraf.sync(path.join(__dirname, 'running'));
-fs.mkdirSync(path.join(__dirname, 'partition'));
+// fs.mkdirSync(path.join(__dirname, 'partition'));
 fs.mkdirSync(path.join(__dirname, 'running'));
 console.log(`BEFORE: ${readyFiles.length}`);
 readyFiles = readyFiles.filter(x => !ignoreList.includes(x));
 console.log(`AFTER: ${readyFiles.length}`);
 const step = Math.ceil(readyFiles.length / numOfServer);
 for (let i = 0; i < numOfServer; i ++) {
-  let from = i * step;
-  let to  = (i + 1) * step;
+  // let from = i * step;
+  // let to  = (i + 1) * step;
   // Create folder
-  const partitionFolder = path.join(__dirname, `partition/eth${i}`);
+  // const partitionFolder = path.join(__dirname, `partition/eth${i}`);
   const runFolder = path.join(__dirname, `running/eth${i}`);
-  fs.mkdirSync(partitionFolder);
+  // fs.mkdirSync(partitionFolder);
   fs.mkdirSync(runFolder);
-  console.log(readyFiles.slice(from, to).length);
-  readyFiles.slice(from, to).forEach((f) => {
-    fs.copyFileSync(path.join(readyFolder, f), path.join(partitionFolder, f));
-  })
+  // console.log(readyFiles.slice(from, to).length);
+  // readyFiles.slice(from, to).forEach((f) => {
+    // fs.copyFileSync(path.join(readyFolder, f), path.join(partitionFolder, f));
+  // })
 }
