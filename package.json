@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "q": "^1.5.1",
     "rimraf": "^3.0.0",
     "shelljs": "^0.8.3"
   }
