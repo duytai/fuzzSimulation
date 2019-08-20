@@ -42,7 +42,8 @@ readyFiles.forEach(filePath => {
   fs.mkdirSync(runFolder);
   fs.copyFileSync(readyFile, runFile);
   shell.cd(pwd);
-  shell.exec(`./fuzzer --file running/${PARTITION}/contracts/${filePath} --name ${filename} --assets assets/ --duration 120 --mode 0 --reporter 1 --attacker ReentrancyAttacker`);
+  console.log(`++ ${filePath}`);
+  shell.exec(`./fuzzer --file running/${PARTITION}/contracts/${filePath} --name ${filename} --assets assets/ --duration 1 --mode 0 --reporter 1 --attacker ReentrancyAttacker`);
   if (fs.existsSync(statFile)) {
     // Read result
     let curStat = JSON.parse(fs.readFileSync(statFile, 'utf8'));
